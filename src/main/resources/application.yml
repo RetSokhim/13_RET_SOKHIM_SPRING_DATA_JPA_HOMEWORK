@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: Spring_data_JPA_homework
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring_data_jpa_db
+    username: postgres
+    password: 092367169
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+server:
+  port: 8181
