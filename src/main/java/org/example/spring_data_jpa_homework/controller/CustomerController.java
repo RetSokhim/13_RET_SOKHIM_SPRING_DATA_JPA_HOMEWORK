@@ -28,7 +28,7 @@ public class CustomerController {
         CustomerResponse customerResponse = customerService.addNewCustomer(customerRequest);
         return new ResponseEntity<>(new APIResponse<>("New customer added successfully",
                 HttpStatus.CREATED,customerResponse,201, LocalDateTime.now()
-                ),HttpStatus.CREATED);
+        ),HttpStatus.CREATED);
     }
 
     @GetMapping("get-all")
@@ -37,7 +37,7 @@ public class CustomerController {
                                             @RequestParam(defaultValue = "5") Integer pageSize,
                                             @RequestParam(defaultValue = "id") String sortField,
                                             @RequestParam SortDirection sortDirection
-                                            ){
+    ){
 
         List<CustomerResponse> customerResponses = customerService.getAllCustomer(
                 pageNumber,
