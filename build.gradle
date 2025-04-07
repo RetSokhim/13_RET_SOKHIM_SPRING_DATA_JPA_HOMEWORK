@@ -11,6 +11,15 @@ plugins {
     id "org.sonarqube" version "4.4.1.3373" // Check for the latest version
 }
 
+//sonarqube {
+//    properties {
+//        property "sonar.projectKey", "gradle"
+//        property "sonar.host.url", "http://localhost:9000/"
+//        property "sonar.token", "sqp_cdac00549725385bd13521fc85a2184c6de6c6a1"
+//
+//
+//    }
+//}
 sonarqube {
     properties {
         property "sonar.projectKey", "gradle"
