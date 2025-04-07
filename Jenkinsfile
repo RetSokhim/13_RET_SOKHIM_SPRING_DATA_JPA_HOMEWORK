@@ -2,10 +2,11 @@ pipeline {
     agent any
     tools {
         gradle 'Gradle' // Assuming you have a Gradle tool configured in Jenkins
+        jdk 'JDK 21'    // Ensure this matches the name you configured for JDK 21 in Jenkins
     }
 
     environment {
-        SONAR_HOST_URL = "http://sonarqube:9000" // Use the name of the container or hostname here
+        SONAR_HOST_URL = "http://localhost:9000" // Use the name of the container or hostname here
     }
 
     stages {
