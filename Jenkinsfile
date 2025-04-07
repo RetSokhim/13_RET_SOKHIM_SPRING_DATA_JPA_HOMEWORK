@@ -23,7 +23,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'gradle-token', variable: 'GRADLE_TOKEN')]) { // Corrected credentialsId
                         sh '''
                             gradle clean build sonarqube \
-                                -Dsonar.projectKey=Spring_data_JPA_homework \
+                                -Dsonar.projectKey=gradle \
                                 -Dsonar.host.url=${SONAR_HOST_URL} \
                                 -Dsonar.login=${GRADLE_TOKEN}
                         '''
