@@ -27,7 +27,7 @@ pipeline {
                                 -Dsonar.host.url=${SONAR_HOST_URL} \
                                 -Dsonar.login=${SONAR_LOGIN}
                         """
-                        echo 'SonarQube Analysis Completed'
+                        
                     }
                 }
             }
