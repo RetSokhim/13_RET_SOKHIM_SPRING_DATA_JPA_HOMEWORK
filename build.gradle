@@ -23,9 +23,10 @@ plugins {
 
 sonarqube {
     properties {
-        property "sonar.projectKey", "Spring_data_JPA_homework" // Match the project key in your Jenkins pipeline
-        property "sonar.host.url", "http://localhost:9000" // Your SonarQube URL
-        property "sonar.login", System.getenv("SONAR_TOKEN") // Important: Use System.getenv() to get the token from Jenkins
+        property "sonar.projectKey", "gradle"
+        property "sonar.projectName", "Spring_data_JPA_homework"
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.login", "sqp_cdac00549725385bd13521fc85a2184c6de6c6a1" // Use your actual SonarQube token here
     }
 }
 
