@@ -1,32 +1,32 @@
 pipeline {
     agent any
     tools {
-        gradle 'Gradle' // Assuming you have a Gradle tool configured in Jenkins
-        jdk 'JDK 21'    // Ensure this matches the name you configured for JDK 21 in Jenkins
+        gradle 'Gradle'  // Ensure Gradle is configured in Jenkins
+        jdk 'JDK 21'    // Ensure Java is configured in Jenkins
     }
-
     environment {
-        SONAR_HOST_URL = "http://localhost:9000" // Use the name of the container or hostname here
+        SONAR_HOST_URL = "http://localhost:9000"
+        SONAR_LOGIN = "sqp_cdac00549725385bd13521fc85a2184c6de6c6a1" // Ensure your SonarQube token is correct
     }
-
     stages {
         stage('Git Checkout') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RetSokhim/13_RET_SOKHIM_SPRING_DATA_JPA_HOMEWORK.git']])
+                checkout scm
                 echo 'Git Checkout Completed'
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('Build and SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube') { // Ensure 'sonarqube' is correctly set up in Jenkins
-                    withCredentials([string(credentialsId: 'gradle-token', variable: 'GRADLE_TOKEN')]) { // Corrected credentialsId
-                        sh '''
+                withSonarQubeEnv('sonarqube') {
+                    withCredentials([string(credentialsId: 'gradle-token', variable: 'GRADLE_TOKEN')]) {
+                        sh """
                             gradle clean build sonarqube \
                                 -Dsonar.projectKey=gradle \
+                                -Dsonar.projectName="Spring_data_JPA_homework" \
                                 -Dsonar.host.url=${SONAR_HOST_URL} \
-                                -Dsonar.login=${GRADLE_TOKEN}
-                        '''
+                                -Dsonar.login=${SONAR_LOGIN}
+                        """
                         echo 'SonarQube Analysis Completed'
                     }
                 }
