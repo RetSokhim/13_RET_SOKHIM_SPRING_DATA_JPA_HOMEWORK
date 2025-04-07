@@ -24,56 +24,78 @@ public class CustomerController {
 
     @PostMapping("create-customer")
     @Operation(summary = "Add new customer")
-    public ResponseEntity<?> addNewCustomer (@RequestBody CustomerRequest customerRequest){
+    public ResponseEntity<APIResponse<CustomerResponse>> addNewCustomer(@RequestBody CustomerRequest customerRequest){
         CustomerResponse customerResponse = customerService.addNewCustomer(customerRequest);
-        return new ResponseEntity<>(new APIResponse<>("New customer added successfully",
-                HttpStatus.CREATED,customerResponse,201, LocalDateTime.now()
-        ),HttpStatus.CREATED);
+        APIResponse<CustomerResponse> response = new APIResponse<>(
+                "New customer added successfully",
+                HttpStatus.CREATED,
+                customerResponse,
+                201,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("get-all")
     @Operation(summary = "Get all customers")
-    public ResponseEntity<?> getAllCustomer(@RequestParam(defaultValue = "1") Integer pageNumber,
-                                            @RequestParam(defaultValue = "5") Integer pageSize,
-                                            @RequestParam(defaultValue = "id") String sortField,
-                                            @RequestParam SortDirection sortDirection
-    ){
+    public ResponseEntity<APIResponse<List<CustomerResponse>>> getAllCustomer(
+            @RequestParam(defaultValue = "1") Integer pageNumber,
+            @RequestParam(defaultValue = "5") Integer pageSize,
+            @RequestParam(defaultValue = "id") String sortField,
+            @RequestParam SortDirection sortDirection){
 
         List<CustomerResponse> customerResponses = customerService.getAllCustomer(
-                pageNumber,
-                pageSize,
-                sortField,
-                sortDirection);
-        return new ResponseEntity<>(new APIResponse<>("Get all customers successfully",
-                HttpStatus.OK,customerResponses,200, LocalDateTime.now()
-        ),HttpStatus.OK);
+                pageNumber, pageSize, sortField, sortDirection);
+        APIResponse<List<CustomerResponse>> response = new APIResponse<>(
+                "Get all customers successfully",
+                HttpStatus.OK,
+                customerResponses,
+                200,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("update-customer/{customerId}")
     @Operation(summary = "Update customer by ID")
-    public ResponseEntity<?> updateProductById(@PathVariable Long customerId,@RequestBody CustomerRequest customerRequest){
-        CustomerResponse customerResponse = customerService.updateCustomerById(customerId,customerRequest);
-        return new ResponseEntity<>(new APIResponse<>("Updated customer by ID successfully",
-                HttpStatus.OK,customerResponse,200, LocalDateTime.now()
-        ),HttpStatus.OK);
+    public ResponseEntity<APIResponse<CustomerResponse>> updateProductById(
+            @PathVariable Long customerId, @RequestBody CustomerRequest customerRequest){
+        CustomerResponse customerResponse = customerService.updateCustomerById(customerId, customerRequest);
+        APIResponse<CustomerResponse> response = new APIResponse<>(
+                "Updated customer by ID successfully",
+                HttpStatus.OK,
+                customerResponse,
+                200,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("get-by-id/{customerId}")
     @Operation(summary = "Get customer by ID")
-    public ResponseEntity<?> getCustomerById(@PathVariable Long customerId){
+    public ResponseEntity<APIResponse<CustomerResponse>> getCustomerById(@PathVariable Long customerId){
         CustomerResponse customerResponse = customerService.getCustomerById(customerId);
-        return new ResponseEntity<>(new APIResponse<>("Get customer by ID successfully",
-                HttpStatus.OK,customerResponse,200, LocalDateTime.now()
-        ),HttpStatus.OK);
+        APIResponse<CustomerResponse> response = new APIResponse<>(
+                "Get customer by ID successfully",
+                HttpStatus.OK,
+                customerResponse,
+                200,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("delete-by-id/{customerId}")
     @Operation(summary = "Delete customer by ID")
-    public ResponseEntity<?> deleteCustomerById(@PathVariable Long customerId){
+    public ResponseEntity<APIResponse<Void>> deleteCustomerById(@PathVariable Long customerId){
         customerService.deleteCustomerById(customerId);
-        return new ResponseEntity<>(new APIResponse<>("Deleted customer by ID successfully",
-                HttpStatus.OK,null,200, LocalDateTime.now()
-        ),HttpStatus.OK);
+        APIResponse<Void> response = new APIResponse<>(
+                "Deleted customer by ID successfully",
+                HttpStatus.OK,
+                null,
+                200,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.ok(response);
     }
-
 }
