@@ -1,44 +1,48 @@
 pipeline {
     agent any
-
-    tools {
-        gradle 'gradle-8.13'  // Use exact Gradle installation name configured in Jenkins
-        jdk 'jdk-21'          // Use exact JDK installation name configured in Jenkins
-    }
-
     environment {
         SONAR_HOST_URL = "http://localhost:9000"
-        SONAR_TOKEN = credentials('gradle-token')  // Use credential ID from Jenkins
+        // Use credential ID that exists in your Jenkins
+        SONAR_TOKEN = credentials('gradle-token')
     }
 
     stages {
-        stage('Git Checkout') {
+        stage('Setup Environment') {
             steps {
-                checkout scm
-                echo 'Git Checkout Completed'
+                script {
+                    // Verify available tools (debugging)
+                    sh 'gradle --version || echo "Gradle not found in PATH"'
+                    sh 'java -version || echo "Java not found in PATH"'
+                }
             }
         }
 
-        stage('Build & SonarQube Analysis') {
+        stage('Git Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build & Analyze') {
             steps {
                 withSonarQubeEnv('sonarqube') {
                     sh """
+                        # Use gradle wrapper if available
                         ./gradlew clean build sonarqube \
                             -Dsonar.projectKey=gradle \
                             -Dsonar.projectName="Spring_data_JPA_homework" \
                             -Dsonar.host.url=${SONAR_HOST_URL} \
                             -Dsonar.login=${SONAR_TOKEN} \
-                            -Dsonar.java.jdkHome=${JAVA_HOME}
+                            --no-daemon
                     """
                 }
-                echo 'SonarQube Analysis Completed'
             }
         }
     }
 
     post {
         always {
-            cleanWs()  // Clean workspace after build
+            cleanWs()
         }
     }
 }
