@@ -1,8 +1,7 @@
 pipeline {
 	agent any
     tools {
-		gradle 'Gradle'   // Ensure that Gradle tool is configured in Jenkins
-        jdk 'JDK 21'      // Make sure JDK 21 is installed in Jenkins
+		gradle 'Gradle'
     }
     environment {
 		SONAR_HOST_URL = "http://localhost:9000"
