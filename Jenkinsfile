@@ -2,7 +2,7 @@ pipeline {
 	agent any
     tools {
 		gradle 'Gradle'
-		jdk 'jdk21'
+		jdk 'JDK 21'
     }
     environment {
 		SONAR_HOST_URL = "http://localhost:9000"
