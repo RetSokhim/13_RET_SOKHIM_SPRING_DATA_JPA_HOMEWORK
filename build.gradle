@@ -33,7 +33,7 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    implementation group: 'com.github.hazendaz.gradle', name: 'gradle', version: '8.13'
+    implementation group: 'com.github.hazendaz.gradle', name: 'gradle', version: '6.7.1'
 }
 
 tasks.named('test') {
