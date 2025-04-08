@@ -20,4 +20,7 @@ public class APIResponse<T>{
     private T payload;
     private Integer code;
     private LocalDateTime time;
+
+    public APIResponse(String newCustomerAddedSuccessfully, HttpStatus httpStatus, T customerResponse, int i, LocalDateTime now) {
+    }
 }

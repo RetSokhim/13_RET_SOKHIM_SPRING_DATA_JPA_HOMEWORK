@@ -6,13 +6,14 @@ import org.example.spring_data_jpa_homework.model.request.CustomerRequest;
 import org.example.spring_data_jpa_homework.model.response.APIResponse;
 import org.example.spring_data_jpa_homework.model.response.CustomerResponse;
 import org.example.spring_data_jpa_homework.service.CustomerService;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@ComponentScan({"com.mycompany.app.beans","com.mycompany.app.web"})
 @RestController
 @RequestMapping("api/v1/customer")
 public class CustomerController {
@@ -83,6 +84,7 @@ public class CustomerController {
                 LocalDateTime.now()
         );
         return ResponseEntity.ok(response);
+
     }
 
     @DeleteMapping("delete-by-id/{customerId}")
