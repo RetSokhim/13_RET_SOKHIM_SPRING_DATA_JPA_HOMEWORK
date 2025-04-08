@@ -19,6 +19,7 @@ java {
 
 repositories {
     mavenCentral()
+    maven { url 'https://plugins.gradle.org/m2/' }
 }
 
 dependencies {
@@ -31,6 +32,7 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation group: 'com.github.hazendaz.gradle', name: 'gradle', version: '8.13'
 }
 
 tasks.named('test') {
