@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
 		SONAR_HOST_URL = "http://localhost:9000"
-        SONAR_LOGIN = "sqp_cdac00549725385bd13521fc85a2184c6de6c6a1"  // Ensure your SonarQube token is correct
+        SONAR_LOGIN = "sqp_cdac00549725385bd13521fc85a2184c6de6c6a1"
     }
     stages {
 		stage('Git Checkout') {
