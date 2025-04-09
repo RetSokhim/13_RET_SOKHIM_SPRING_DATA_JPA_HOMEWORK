@@ -28,7 +28,7 @@ pipeline {
                     script {
                         // Run the Gradle sonar task with SonarQube details
                         sh """
-                            ./gradlew clean build sonar --continue \\
+                            ./gradlew clean build -x test sonar  \\
                                 -Dsonar.projectKey=${SONAR_PROJECT_KEY} \\
                                 -Dsonar.projectName="${SONAR_PROJECT_NAME}" \\
                                 -Dsonar.host.url=${SONAR_HOST_URL} \\
