@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         SONAR_HOST_URL = "http://localhost:9000"
-        SONAR_LOGIN = credentials('sonarqube-token') // 🔒 Store your token in Jenkins Credentials
+        SONAR_LOGIN = credentials('gradle-token') // 🔒 Store your token in Jenkins Credentials
     }
 
     stages {
