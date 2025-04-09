@@ -44,7 +44,7 @@ sonar {
     properties {
         property "sonar.projectKey", "gradle"
         property "sonar.projectName", "Spring_data_JPA_homework"
-        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.host.url", "http://sonarqube-202511104738-sonarqube-1:9000"
         property "sonar.login", "sqp_cdac00549725385bd13521fc85a2184c6de6c6a1"  // Replace with your generated token
     
     }
