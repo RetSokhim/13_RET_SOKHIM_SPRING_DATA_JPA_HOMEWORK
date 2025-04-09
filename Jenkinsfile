@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         SONAR_HOST_URL = "http://localhost:9000"
-        SONAR_LOGIN = "sqp_cdac00549725385bd13521fc85a2184c6de6c6a1"
+        SONAR_LOGIN = credentials('sonarqube-token') // 🔒 Store your token in Jenkins Credentials
     }
 
     stages {
@@ -22,14 +22,12 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    withCredentials([string(credentialsId: 'gradle-token', variable: 'GRADLE_TOKEN')]) {
-                        sh """
-                            ./gradlew sonar -X test \
-                                -Dsonar.projectKey=gradle \
-                                -Dsonar.projectName="Spring_data_JPA_homework" \
-                                -Dsonar.host.url=${SONAR_HOST_URL} \
-                                -Dsonar.login=${SONAR_LOGIN}
-                        """
+                    script {
+                        sh '''./gradlew sonar -x test \
+                          -Dsonar.projectKey=gradle \
+                          -Dsonar.projectName="Spring_data_JPA_homework" \
+                          -Dsonar.host.url=$SONAR_HOST_URL \
+                          -Dsonar.login=$SONAR_LOGIN'''
                     }
                 }
             }
