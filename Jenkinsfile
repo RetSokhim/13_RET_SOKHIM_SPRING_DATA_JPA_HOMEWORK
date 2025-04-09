@@ -21,7 +21,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQubeScanner') {  // Ensure SonarQube is configured in Jenkins
+                withSonarQubeEnv('sonarqube') {  // Ensure SonarQube is configured in Jenkins
                     withCredentials([string(credentialsId: 'gradle2', variable: 'GRADLE_TOKEN')]) {
                         script {
                             // Run the Gradle build and SonarQube analysis
