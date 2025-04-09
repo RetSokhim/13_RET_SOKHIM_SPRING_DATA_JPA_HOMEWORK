@@ -24,7 +24,7 @@ pipeline {
                 withSonarQubeEnv('sonarqube') {
                     withCredentials([string(credentialsId: 'gradle-token', variable: 'GRADLE_TOKEN')]) {
                         sh """
-                            ./gradlew sonarqube \
+                            ./gradlew sonar \
                                 -Dsonar.projectKey=gradle \
                                 -Dsonar.projectName="Spring_data_JPA_homework" \
                                 -Dsonar.host.url=${SONAR_HOST_URL} \
