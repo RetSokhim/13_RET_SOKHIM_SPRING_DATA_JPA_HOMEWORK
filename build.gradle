@@ -42,28 +42,27 @@ tasks.named('test') {
 
 sonar {
     properties {
-        property "sonar.projectKey", "gradle"
-        property "sonar.projectName", "Spring_data_JPA_homework"
-        property "sonar.host.url", "http://sonarqube-202511104738-sonarqube-1:9000"
-        property "sonar.login", "sqp_cdac00549725385bd13521fc85a2184c6de6c6a1"  // Replace with your generated token
-    
+        property "sonar.projectKey", "gradle2"
+        property "sonar.projectName", "gradle2"
+        property "sonar.host.url", "http://sonarqube-202511104738-sonarqube-1:9000"// Replace with your generated token
+        property "sonar.login", "sqp_3718835b2bf31c52c01ba7f84724d77cf9e1b997"
     }
-}
 /////
-jacoco {
-    toolVersion = "0.8.11" // Use a recent version
-}
-
-jacocoTestReport {
-    dependsOn test // Run tests before generating report
-    reports {
-        xml.required = true
-        html.required = true
+    jacoco {
+        toolVersion = "0.8.11" // Use a recent version
     }
-}
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+    jacocoTestReport {
+        dependsOn test // Run tests before generating report
+        reports {
+            xml.required = true
+            html.required = true
+        }
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
     }
 }
