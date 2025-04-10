@@ -14,7 +14,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv('SonarQube') {
+                    withSonarQubeEnv('sonarqube') {
                         sh './gradlew sonarqube -Dsonar.projectKey=gradle2' // Use the correct project key
                     }
                 }
