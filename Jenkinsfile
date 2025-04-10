@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        SONAR_HOST_URL = "http://localhost:9000" // ✅ FIXED: Use correct URL
+        SONAR_HOST_URL = "http://localhost:9000"
         SONAR_LOGIN = "sqp_3718835b2bf31c52c01ba7f84724d77cf9e1b997"
     }
 
