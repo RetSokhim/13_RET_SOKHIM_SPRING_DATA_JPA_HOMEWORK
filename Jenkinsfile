@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        SONAR_HOST_URL = "http://localhost:9000"   // Ensure SonarQube is running on this URL
+        SONAR_HOST_URL = "http://sonarqube-202511104738-sonarqube-1:9000"   // Ensure SonarQube is running on this URL
         SONAR_LOGIN = "sqp_3718835b2bf31c52c01ba7f84724d77cf9e1b997" // Your SonarQube token
     }
 
@@ -26,7 +26,7 @@ pipeline {
                         script {
                             // Run the Gradle build and SonarQube analysis
                             sh """
-                                ./gradlew clean build -x test \
+                                ./gradlew sonarqube \
                                     -Dsonar.projectKey=gradle2 \
                                     -Dsonar.projectName="gradle2" \
                                     -Dsonar.host.url=${SONAR_HOST_URL} \
