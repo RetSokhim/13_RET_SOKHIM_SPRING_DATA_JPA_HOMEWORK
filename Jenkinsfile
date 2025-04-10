@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         SONARQUBE = 'sonarqube' // Name of your SonarQube server in Jenkins config
+        SONAR_TOKEN = credentials('gradle2') // Fetch the token from Jenkins credentials
     }
     stages {
         stage('Build') {
@@ -15,7 +16,7 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv('sonarqube') {
-                        sh './gradlew sonarqube -Dsonar.projectKey=gradle2' // Use the correct project key
+                        sh './gradlew sonarqube -Dsonar.projectKey=gradle2 -Dsonar.token=$SONAR_TOKEN' // Use the token from environment
                     }
                 }
             }
