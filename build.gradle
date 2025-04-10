@@ -55,7 +55,7 @@ sonar {
     properties {
         property "sonar.projectKey", "gradle2"
         property "sonar.projectName", "gradle2"
-        property "sonar.host.url", "http://localhost:9000"  // Use internal or Jenkins-accessible host
+        property "sonar.host.url", "http://sonarqube-202511104738-sonarqube-1:9000"  // Use internal or Jenkins-accessible host
         property "sonar.login", "sqp_3718835b2bf31c52c01ba7f84724d77cf9e1b997"
         property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
     }
