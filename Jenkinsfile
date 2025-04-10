@@ -27,7 +27,7 @@ pipeline {
                             ./gradlew clean test jacocoTestReport sonar \
                                 -Dsonar.projectKey=gradle2 \
                                 -Dsonar.projectName=gradle2 \
-                                -Dsonar.host.url=${SONAR_HOST_URL} \
+                                -Dgit sonar.host.url=${SONAR_HOST_URL} \
                                 -Dsonar.login=${SONAR_LOGIN} \
                                 -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
                         """
