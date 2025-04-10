@@ -8,7 +8,11 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh './gradlew build'
+                    // Run build command
+                    def buildResult = sh(script: './gradlew build', returnStatus: true)
+                    if (buildResult != 0) {
+                        error "Build failed, stopping pipeline."
+                    }
                 }
             }
         }
@@ -16,7 +20,11 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv('sonarqube') {
-                        sh './gradlew sonar -Dsonar.projectKey=gradle2 -Dsonar.token=$SONAR_TOKEN' // Use the token from environment
+                        // Run SonarQube analysis
+                        def sonarResult = sh(script: './gradlew sonarqube -Dsonar.projectKey=gradle2 -Dsonar.token=$SONAR_TOKEN', returnStatus: true)
+                        if (sonarResult != 0) {
+                            error "SonarQube analysis failed, stopping pipeline."
+                        }
                     }
                 }
             }
