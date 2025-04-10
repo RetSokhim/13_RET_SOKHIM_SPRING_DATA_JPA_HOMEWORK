@@ -2,18 +2,16 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.4'
     id 'io.spring.dependency-management' version '1.1.4'
-    id "org.sonarqube" version "6.0.1.5171"
+    id 'org.sonarqube' version '6.0.1.5171'
     id 'jacoco'
-
-
 }
 
 group = 'org.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    toolchain { 
-        languageVersion = JavaLanguageVersion.of(8)
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)  // Use Java 21 here
     }
 }
 
@@ -36,33 +34,29 @@ dependencies {
     implementation group: 'com.github.hazendaz.gradle', name: 'gradle', version: '6.7.1'
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
-sonar {
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+sonarqube {
     properties {
         property "sonar.projectKey", "gradle2"
         property "sonar.projectName", "gradle2"
-        property "sonar.host.url", "http://sonarqube-202511104738-sonarqube-1:9000"// Replace with your generated token
+        property "sonar.host.url", "http://localhost:9000"  // Use internal or Jenkins-accessible host
         property "sonar.login", "sqp_3718835b2bf31c52c01ba7f84724d77cf9e1b997"
-    }
-/////
-    jacoco {
-        toolVersion = "0.8.11" // Use a recent version
-    }
-
-    jacocoTestReport {
-        dependsOn test // Run tests before generating report
-        reports {
-            xml.required = true
-            html.required = true
-        }
-    }
-
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(21)
-        }
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
