@@ -51,7 +51,7 @@ jacocoTestReport {
     }
 }
 
-sonarqube {
+sonar {
     properties {
         property "sonar.projectKey", "gradle2"
         property "sonar.projectName", "gradle2"
