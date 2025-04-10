@@ -11,13 +11,21 @@ pipeline {
         SONAR_LOGIN = "sqp_3718835b2bf31c52c01ba7f84724d77cf9e1b997" // Your SonarQube token
     }
 
-    stages {
-        stage('Git Checkout') {
-            steps {
-                checkout scm
-                echo 'Git Checkout Completed'
-            }
-        }
+//     stages {
+//         stage('Git Checkout') {
+//             steps {
+//                 checkout scm
+//                 echo 'Git Checkout Completed'
+//             }
+//         }
+         stages {
+                stage('Git Checkout') {
+                    steps {
+                        checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RetSokhim/13_RET_SOKHIM_SPRING_DATA_JPA_HOMEWORK.git']])
+                        echo 'Git Checkout Completed'
+                    }
+                }
+
 
         stage('SonarQube Analysis') {
             steps {
