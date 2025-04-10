@@ -1,51 +1,43 @@
 pipeline {
     agent any
-    environment {
-        SONARQUBE = 'sonarqube' // Name of your SonarQube server in Jenkins config
-        SONAR_TOKEN = credentials('gradle2') // Fetch the token from Jenkins credentials
+
+    tools {
+        gradle 'Gradle'      // Ensure Gradle tool is correctly configured in Jenkins
+        jdk 'JDK 21'         // Ensure JDK 21 is correctly configured in Jenkins
     }
+
+    environment {
+        SONAR_HOST_URL = "http://localhost:9000"   // Ensure SonarQube is running on this URL
+        SONAR_LOGIN = "sqp_3718835b2bf31c52c01ba7f84724d77cf9e1b997" // Your SonarQube token
+    }
+
     stages {
-        stage('Build') {
+        stage('Git Checkout') {
             steps {
-                script {
-                    // Run build command and handle failure
-                    try {
-                        def buildResult = sh(script: './gradlew build', returnStatus: true)
-                        if (buildResult != 0) {
-                            error "Build failed with status code ${buildResult}, stopping pipeline."
-                        }
-                    } catch (Exception e) {
-                        currentBuild.result = 'FAILURE'
-                        throw e
-                    }
-                }
+                checkout scm
+                echo 'Git Checkout Completed'
             }
         }
+
         stage('SonarQube Analysis') {
             steps {
-                script {
-                    withSonarQubeEnv('sonarqube') {
-                        // Run SonarQube analysis and handle failure
-                        try {
-                            def sonarResult = sh(script: './gradlew sonarqube -Dsonar.projectKey=gradle2 -Dsonar.token=$SONAR_TOKEN', returnStatus: true)
-                            if (sonarResult != 0) {
-                                error "SonarQube analysis failed with status code ${sonarResult}, stopping pipeline."
-                            }
-                        } catch (Exception e) {
-                            currentBuild.result = 'FAILURE'
-                            throw e
+                withSonarQubeEnv('sonarqube') {  // Ensure SonarQube is configured in Jenkins
+                    withCredentials([string(credentialsId: 'gradle2', variable: 'GRADLE_TOKEN')]) {
+                        script {
+                            // Run the Gradle build and SonarQube analysis
+                            sh """
+                                ./gradlew clean build -x test \
+                                    -Dsonar.projectKey=gradle2 \
+                                    -Dsonar.projectName="gradle2" \
+                                    -Dsonar.host.url=${SONAR_HOST_URL} \
+                                    -Dsonar.login=${SONAR_LOGIN}
+                            """
                         }
+                        echo 'SonarQube Analysis Completed'
                     }
                 }
             }
-        }
-    }
-    post {
-        success {
-            echo 'Build and SonarQube analysis completed successfully.'
-        }
-        failure {
-            echo 'There was an issue with the build or SonarQube analysis.'
         }
     }
 }
+
