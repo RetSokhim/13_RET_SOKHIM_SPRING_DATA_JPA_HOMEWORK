@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv('sonarqube') {
-                        sh './gradlew sonarqube -Dsonar.projectKey=gradle2 -Dsonar.token=$SONAR_TOKEN' // Use the token from environment
+                        sh './gradlew sonar -Dsonar.projectKey=gradle2 -Dsonar.token=$SONAR_TOKEN' // Use the token from environment
                     }
                 }
             }
