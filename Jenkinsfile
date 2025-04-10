@@ -34,7 +34,7 @@ pipeline {
                         script {
                             // Run the Gradle build and SonarQube analysis
                             sh """
-                                ./gradlew clean build test \
+                                ./gradlew clean build \
                                     -Dsonar.projectKey=gradle2 \
                                     -Dsonar.projectName="gradle2" \
                                     -Dsonar.host.url=${SONAR_HOST_URL} \
