@@ -23,7 +23,7 @@ pipeline {
         }
 
         stage('Docker Login') {
-            steps {
+            steps {                                            
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
                 }
@@ -52,7 +52,8 @@ pipeline {
 
         stage('Custom Quality Rule - Fail on Bad Metrics') {
             steps {
-                script {
+                script {  
+                                            // This credentials is the user token in SonarQube.
                     withCredentials([string(credentialsId: 'usonar-token', variable: 'SONAR_TOKEN')]) {
                         def response = sh(
                             script: """
